@@ -4,7 +4,9 @@ A terminal Tetris game where each landed piece turns into sand particles. I’m 
 
 ## gameplay
 
-[Watch the gameplay video](assets/doom_tris.mp4)
+![Gameplay preview](assets/gameplay.gif)
+
+[Open the full video](assets/doom_tris.mp4)
 
 ## how the board works
 
