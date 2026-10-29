@@ -2,6 +2,10 @@
 
 A terminal Tetris game where each landed piece turns into sand particles. I’m building it in Rust with Ratatui and Crossterm.
 
+## gameplay
+
+[Watch the gameplay video](assets/doom_tris.mp4)
+
 ## how the board works
 
 There are two board sizes to keep track of:
@@ -35,3 +39,46 @@ The score is calculated from the stats instead of being incremented separately:
 score = active seconds × 100
       + blocks placed × 250
       + rows cleared × 1,000
+```
+
+The timer starts when the first piece spawns. It uses elapsed time, so it doesn’t depend on a timer callback firing exactly on schedule. Pausing saves the elapsed time and resuming starts counting again. Game over stops the timer.
+
+## controls
+
+| Key | Action |
+| --- | --- |
+| `←` / `→` | Move the piece |
+| `↓` | Move down one row |
+| `1`–`7` | Spawn I, O, T, S, Z, J, or L in dev mode |
+| `g` | Switch to random mode |
+| `d` | Switch to dev mode |
+| `p` | Pause or resume |
+| `q` or `Esc` | Quit |
+
+The game starts empty in dev mode, so press a number to spawn a piece. In random mode, another piece is chosen after the current one lands.
+
+## code layout
+
+- `src/game.rs` — game loop, input, gravity, and landing
+- `src/board.rs` — board dimensions, piece shapes, collision checks, particle movement, and connected-group clearing
+- `src/scoreboard.rs` — elapsed time, counters, score calculation, and stats panel
+- `src/ui.rs` — board, controls, and game-over rendering
+- `src/main.rs` — starts the game
+
+## run it
+
+You need Rust and Cargo with support for the 2024 edition.
+
+```sh
+cargo run
+```
+
+Run the tests with:
+
+```sh
+cargo test
+```
+
+## current limits
+
+Pieces can move left and right, but they can’t rotate or hard drop. Random mode also doesn’t show a next-piece preview. The sand movement is intentionally basic for now: each particle only tries to move down or diagonally.
